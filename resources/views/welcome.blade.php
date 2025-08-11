@@ -184,257 +184,97 @@
 
             <!-- Product Grid -->
             <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Product Card 1 -->
-                <div class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-1"
-                    data-aos="fade-up" data-aos-delay="100">
-                    <div
-                        class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                        <i class="fas fa-ring text-6xl text-white floating"></i>
-                        <div class="absolute top-4 right-4">
-                            <span class="price-tag px-3 py-1 rounded-full text-sm">$299</span>
-                        </div>
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">NEW</span>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-dark/80 backdrop-blur-sm">
-                        <h3 class="text-xl font-serif font-bold text-white mb-2">Diamond Elegance Ring</h3>
-                        <p class="text-gray-300 text-sm mb-4">Exquisite diamond ring with platinum setting</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-300 text-sm ml-2">(24)</span>
-                            </div>
-                            <button
-                                class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                @php
+                    $products = [
+                        (object)[
+                            'id' => 1,
+                            'name' => 'Classic Silver Ring',
+                            'description' => 'A timeless silver ring for every occasion.',
+                            'price' => '120',
+                            'icon' => 'fas fa-ring',
+                            'icon_delay' => '0.5s',
+                            'badge' => 'New',
+                            'badge_class' => 'bg-primary text-white',
+                            'rating' => 4.5,
+                            'reviews' => 32,
+                        ],
+                        (object)[
+                            'id' => 2,
+                            'name' => 'Elegant Necklace',
+                            'description' => 'Handcrafted necklace with premium silver.',
+                            'price' => '250',
+                            'icon' => 'fas fa-gem',
+                            'icon_delay' => '1s',
+                            'badge' => 'Best Seller',
+                            'badge_class' => 'bg-yellow-400 text-dark',
+                            'rating' => 5,
+                            'reviews' => 54,
+                        ],
+                        (object)[
+                            'id' => 3,
+                            'name' => 'Royal Crown Earrings',
+                            'description' => 'Luxury earrings fit for royalty.',
+                            'price' => '180',
+                            'icon' => 'fas fa-crown',
+                            'icon_delay' => '1.5s',
+                            'badge' => '',
+                            'badge_class' => '',
+                            'rating' => 4,
+                            'reviews' => 21,
+                        ],
+                        (object)[
+                            'id' => 4,
+                            'name' => 'Silver Bracelet',
+                            'description' => 'Elegant bracelet for daily wear.',
+                            'price' => '95',
+                            'icon' => 'fas fa-heart',
+                            'icon_delay' => '2s',
+                            'badge' => 'Limited',
+                            'badge_class' => 'bg-red-500 text-white',
+                            'rating' => 3.5,
+                            'reviews' => 12,
+                        ],
+                    ];
+                @endphp
 
-                <!-- Product Card 2 -->
-                <div class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:-rotate-1"
-                    data-aos="fade-up" data-aos-delay="200">
-                    <div
-                        class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                        <i class="fas fa-gem text-6xl text-white floating" style="animation-delay: 1s;"></i>
-                        <div class="absolute top-4 right-4">
-                            <span class="price-tag px-3 py-1 rounded-full text-sm">$599</span>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-dark/80 backdrop-blur-sm">
-                        <h3 class="text-xl font-serif font-bold text-white mb-2">Sapphire Pendant</h3>
-                        <p class="text-gray-300 text-sm mb-4">Royal blue sapphire with gold chain</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-300 text-sm ml-2">(18)</span>
+                @foreach($products as $product)
+                    <a href="{{ route('landing.product-detail', $product->id) }}" class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-1 block"
+                        data-aos="fade-up" data-aos-delay="{{ 100 + $loop->index * 100 }}">
+                        <div class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
+                            <i class="{{ $product->icon }} text-6xl text-white floating" @if(!empty($product->icon_delay)) style="animation-delay: {{ $product->icon_delay }};" @endif></i>
+                            <div class="absolute top-4 right-4">
+                                <span class="price-tag px-3 py-1 rounded-full text-sm">${{ $product->price }}</span>
                             </div>
-                            <button
-                                class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Add to Cart
-                            </button>
+                            @if(!empty($product->badge))
+                                <div class="absolute top-4 left-4">
+                                    <span class="{{ $product->badge_class }} px-2 py-1 rounded-full text-xs font-bold">{{ $product->badge }}</span>
+                                </div>
+                            @endif
                         </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 3 -->
-                <div class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-1"
-                    data-aos="fade-up" data-aos-delay="300">
-                    <div
-                        class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                        <i class="fas fa-crown text-6xl text-white floating" style="animation-delay: 2s;"></i>
-                        <div class="absolute top-4 right-4">
-                            <span class="price-tag px-3 py-1 rounded-full text-sm">$899</span>
-                        </div>
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-bold">PREMIUM</span>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-dark/80 backdrop-blur-sm">
-                        <h3 class="text-xl font-serif font-bold text-white mb-2">Royal Crown Tiara</h3>
-                        <p class="text-gray-300 text-sm mb-4">Luxury tiara with precious stones</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-300 text-sm ml-2">(31)</span>
+                        <div class="p-6 bg-dark/80 backdrop-blur-sm">
+                            <h3 class="text-xl font-serif font-bold text-white mb-2">{{ $product->name }}</h3>
+                            <p class="text-gray-300 text-sm mb-4">{{ $product->description }}</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex text-yellow-400">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($product->rating >= $i)
+                                            <i class="fas fa-star"></i>
+                                        @elseif($product->rating >= $i - 0.5)
+                                            <i class="fas fa-star-half-alt"></i>
+                                        @else
+                                            <i class="far fa-star"></i>
+                                        @endif
+                                    @endfor
+                                    <span class="text-gray-300 text-sm ml-2">({{ $product->reviews }})</span>
+                                </div>
+                                <button
+                                    class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                                    Add to Cart
+                                </button>
                             </div>
-                            <button
-                                class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Add to Cart
-                            </button>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 4 -->
-                <div class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:-rotate-1"
-                    data-aos="fade-up" data-aos-delay="400">
-                    <div
-                        class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                        <i class="fas fa-heart text-6xl text-white floating" style="animation-delay: 0.5s;"></i>
-                        <div class="absolute top-4 right-4">
-                            <span class="price-tag px-3 py-1 rounded-full text-sm">$399</span>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-dark/80 backdrop-blur-sm">
-                        <h3 class="text-xl font-serif font-bold text-white mb-2">Heart Locket</h3>
-                        <p class="text-gray-300 text-sm mb-4">Vintage gold heart locket with engraving</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="text-gray-300 text-sm ml-2">(15)</span>
-                            </div>
-                            <button
-                                class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 5 -->
-                <div class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-1"
-                    data-aos="fade-up" data-aos-delay="500">
-                    <div
-                        class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                        <i class="fas fa-star text-6xl text-white floating" style="animation-delay: 1.5s;"></i>
-                        <div class="absolute top-4 right-4">
-                            <span class="price-tag px-3 py-1 rounded-full text-sm">$199</span>
-                        </div>
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-bold">SALE</span>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-dark/80 backdrop-blur-sm">
-                        <h3 class="text-xl font-serif font-bold text-white mb-2">Star Earrings</h3>
-                        <p class="text-gray-300 text-sm mb-4">Delicate star-shaped silver earrings</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <span class="text-gray-300 text-sm ml-2">(12)</span>
-                            </div>
-                            <button
-                                class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 6 -->
-                <div class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:-rotate-1"
-                    data-aos="fade-up" data-aos-delay="600">
-                    <div
-                        class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                        <i class="fas fa-infinity text-6xl text-white floating" style="animation-delay: 2.5s;"></i>
-                        <div class="absolute top-4 right-4">
-                            <span class="price-tag px-3 py-1 rounded-full text-sm">$449</span>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-dark/80 backdrop-blur-sm">
-                        <h3 class="text-xl font-serif font-bold text-white mb-2">Infinity Bracelet</h3>
-                        <p class="text-gray-300 text-sm mb-4">Symbol of eternal love in rose gold</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-300 text-sm ml-2">(27)</span>
-                            </div>
-                            <button
-                                class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 7 -->
-                <div class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-1"
-                    data-aos="fade-up" data-aos-delay="700">
-                    <div
-                        class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                        <i class="fas fa-moon text-6xl text-white floating" style="animation-delay: 0.8s;"></i>
-                        <div class="absolute top-4 right-4">
-                            <span class="price-tag px-3 py-1 rounded-full text-sm">$349</span>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-dark/80 backdrop-blur-sm">
-                        <h3 class="text-xl font-serif font-bold text-white mb-2">Crescent Moon Ring</h3>
-                        <p class="text-gray-300 text-sm mb-4">Mystical crescent with moonstone</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="text-gray-300 text-sm ml-2">(19)</span>
-                            </div>
-                            <button
-                                class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 8 -->
-                <div class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:-rotate-1"
-                    data-aos="fade-up" data-aos-delay="800">
-                    <div
-                        class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                        <i class="fas fa-feather text-6xl text-white floating" style="animation-delay: 1.8s;"></i>
-                        <div class="absolute top-4 right-4">
-                            <span class="price-tag px-3 py-1 rounded-full text-sm">$259</span>
-                        </div>
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-bold">LIMITED</span>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-dark/80 backdrop-blur-sm">
-                        <h3 class="text-xl font-serif font-bold text-white mb-2">Feather Pendant</h3>
-                        <p class="text-gray-300 text-sm mb-4">Delicate feather design in white gold</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <span class="text-gray-300 text-sm ml-2">(8)</span>
-                            </div>
-                            <button
-                                class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                    </a>
+                @endforeach
             </div>
 
             <!-- Load More Button -->
