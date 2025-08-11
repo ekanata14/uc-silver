@@ -181,95 +181,32 @@
                     Bracelets
                 </button>
             </div>
-
             <!-- Product Grid -->
             <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                @php
-                    $products = [
-                        (object)[
-                            'id' => 1,
-                            'name' => 'Classic Silver Ring',
-                            'description' => 'A timeless silver ring for every occasion.',
-                            'price' => '120',
-                            'icon' => 'fas fa-ring',
-                            'icon_delay' => '0.5s',
-                            'badge' => 'New',
-                            'badge_class' => 'bg-primary text-white',
-                            'rating' => 4.5,
-                            'reviews' => 32,
-                        ],
-                        (object)[
-                            'id' => 2,
-                            'name' => 'Elegant Necklace',
-                            'description' => 'Handcrafted necklace with premium silver.',
-                            'price' => '250',
-                            'icon' => 'fas fa-gem',
-                            'icon_delay' => '1s',
-                            'badge' => 'Best Seller',
-                            'badge_class' => 'bg-yellow-400 text-dark',
-                            'rating' => 5,
-                            'reviews' => 54,
-                        ],
-                        (object)[
-                            'id' => 3,
-                            'name' => 'Royal Crown Earrings',
-                            'description' => 'Luxury earrings fit for royalty.',
-                            'price' => '180',
-                            'icon' => 'fas fa-crown',
-                            'icon_delay' => '1.5s',
-                            'badge' => '',
-                            'badge_class' => '',
-                            'rating' => 4,
-                            'reviews' => 21,
-                        ],
-                        (object)[
-                            'id' => 4,
-                            'name' => 'Silver Bracelet',
-                            'description' => 'Elegant bracelet for daily wear.',
-                            'price' => '95',
-                            'icon' => 'fas fa-heart',
-                            'icon_delay' => '2s',
-                            'badge' => 'Limited',
-                            'badge_class' => 'bg-red-500 text-white',
-                            'rating' => 3.5,
-                            'reviews' => 12,
-                        ],
-                    ];
-                @endphp
-
                 @foreach($products as $product)
                     <a href="{{ route('landing.product-detail', $product->id) }}" class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-1 block"
                         data-aos="fade-up" data-aos-delay="{{ 100 + $loop->index * 100 }}">
                         <div class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
-                            <i class="{{ $product->icon }} text-6xl text-white floating" @if(!empty($product->icon_delay)) style="animation-delay: {{ $product->icon_delay }};" @endif></i>
-                            <div class="absolute top-4 right-4">
-                                <span class="price-tag px-3 py-1 rounded-full text-sm">${{ $product->price }}</span>
-                            </div>
-                            @if(!empty($product->badge))
-                                <div class="absolute top-4 left-4">
-                                    <span class="{{ $product->badge_class }} px-2 py-1 rounded-full text-xs font-bold">{{ $product->badge }}</span>
-                                </div>
+                            @if($product->images && count($product->images) > 0)
+                                @php
+                                    $imgPath = $product->images[0]->path;
+                                    $isUrl = filter_var($imgPath, FILTER_VALIDATE_URL);
+                                @endphp
+                                <img src="{{ $isUrl ? $imgPath : asset('storage/' . $imgPath) }}" alt="{{ $product->name }}" class="object-cover w-full h-full rounded-2xl" />
+                            @else
+                                <div class="flex items-center justify-center w-full h-full text-gray-400">No Image</div>
                             @endif
+                            <div class="absolute top-4 right-4">
+                                <span class="price-tag px-3 py-1 rounded-full text-sm">IDR. {{ $product->price }}</span>
+                            </div>
                         </div>
                         <div class="p-6 bg-dark/80 backdrop-blur-sm">
                             <h3 class="text-xl font-serif font-bold text-white mb-2">{{ $product->name }}</h3>
                             <p class="text-gray-300 text-sm mb-4">{{ $product->description }}</p>
-                            <div class="flex items-center justify-between">
-                                <div class="flex text-yellow-400">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($product->rating >= $i)
-                                            <i class="fas fa-star"></i>
-                                        @elseif($product->rating >= $i - 0.5)
-                                            <i class="fas fa-star-half-alt"></i>
-                                        @else
-                                            <i class="far fa-star"></i>
-                                        @endif
-                                    @endfor
-                                    <span class="text-gray-300 text-sm ml-2">({{ $product->reviews }})</span>
-                                </div>
+                            <div class="flex items-center justify-end">
                                 <button
                                     class="bg-white text-primary px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                    Add to Cart
+                                    Order
                                 </button>
                             </div>
                         </div>

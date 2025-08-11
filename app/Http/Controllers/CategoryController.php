@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class CategoryController extends Controller
             DB::beginTransaction();
             Category::create($validated);
             DB::commit();
-            return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+            return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors('Failed to create category: ' . $e->getMessage());
@@ -49,23 +49,25 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(string $id)
     {
-        return view('categories.show', compact('category'));
+        $category = Category::findOrFail($id);
+        return view('admin.categories.show', compact('category'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(string $id)
     {
-        return view('categories.edit', compact('category'));
+        $category = Category::findOrFail($id);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, string $id)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -74,9 +76,10 @@ class CategoryController extends Controller
 
         try {
             DB::beginTransaction();
+            $category = Category::findOrFail($id);
             $category->update($validated);
             DB::commit();
-            return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+            return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors('Failed to update category: ' . $e->getMessage());
@@ -86,13 +89,14 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(string $id)
     {
         try {
             DB::beginTransaction();
+            $category = Category::findOrFail($id);
             $category->delete();
             DB::commit();
-            return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+            return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors('Failed to delete category: ' . $e->getMessage());

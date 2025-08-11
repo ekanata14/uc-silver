@@ -6,21 +6,32 @@
             <div>
                 <div class="flex flex-col md:flex-row gap-6">
                     {{-- Thumbnails --}}
-                    <div class="hidden md:flex flex-col gap-3 items-start">
-                        @foreach ([1, 2, 3, 4] as $i)
+                    <div class="hidden md:flex flex-col gap-3 items-start max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary/30 scrollbar-track-transparent">
+                        @foreach ($product->images as $i => $image)
+                            @php
+                                $imageUrl = Str::startsWith($image->path, ['http://', 'https://'])
+                                    ? $image->path
+                                    : asset('storage/' . $image->path);
+                            @endphp
                             <button
-                                class="border rounded-lg overflow-hidden transition-colors {{ $i == 1 ? 'border-primary' : 'border-primary/20 hover:border-primary' }}">
-                                <img src="https://images.unsplash.com/photo-1617191880362-aac615de3c26?q=80&w=4050&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                    alt="Diamond Elegance Ring - Thumbnail {{ $i }}" width="100" height="120"
-                                    class="aspect-[5/6] object-cover" />
-                                <span class="sr-only">View Image {{ $i }}</span>
+                                class="border rounded-lg overflow-hidden transition-colors {{ $image->is_primary ? 'border-primary' : 'border-primary/20 hover:border-primary' }}">
+                                <img src="{{ $imageUrl }}"
+                                    alt="{{ $product->name }} - Thumbnail {{ $i + 1 }}" width="100" height="120"
+                                    class="aspect-[5/6] object-cover max-w-full" />
+                                <span class="sr-only">View Image {{ $i + 1 }}</span>
                             </button>
                         @endforeach
                     </div>
                     {{-- Main Image --}}
                     <div class="flex-1">
-                        <img src="https://images.unsplash.com/photo-1617191880362-aac615de3c26?q=80&w=4050&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="Diamond Elegance Ring - Main Image" width="600" height="900"
+                        @php
+                            $primaryImage = $product->images->firstWhere('is_primary', true) ?? $product->images->first();
+                            $mainImageUrl = $primaryImage && Str::startsWith($primaryImage->path, ['http://', 'https://'])
+                                ? $primaryImage->path
+                                : asset('storage/' . ($primaryImage->path ?? ''));
+                        @endphp
+                        <img src="{{ $mainImageUrl }}"
+                            alt="{{ $product->name }} - Main Image" width="600" height="900"
                             class="aspect-[2/3] object-cover border border-primary/30 w-full rounded-lg overflow-hidden jewelry-glow shadow-lg" />
                     </div>
                 </div>
@@ -29,8 +40,8 @@
             {{-- Product Details --}}
             <div>
                 <div class="grid gap-6">
-                    <h1 class="font-serif font-bold text-4xl lg:text-5xl gradient-text mb-2">Diamond Elegance Ring</h1>
-                    <div class="flex items-center gap-4 mb-2">
+                    <h1 class="font-serif font-bold text-4xl lg:text-5xl gradient-text mb-2">{{ $product->name }}</h1>
+                    {{-- <div class="flex items-center gap-4 mb-2">
                         <div class="flex items-center gap-0.5 text-primary-lighter">
                             <i class="fas fa-star w-5 h-5 fill-primary-lighter"></i>
                             <i class="fas fa-star w-5 h-5 fill-primary-lighter"></i>
@@ -39,17 +50,16 @@
                             <i class="far fa-star w-5 h-5 fill-gray-600 stroke-gray-600"></i>
                         </div>
                         <span class="text-gray-400 text-sm ml-2">(24 Reviews)</span>
-                    </div>
-                    <div class="text-4xl font-bold text-primary-lighter mb-4">$299.00</div>
+                    </div> --}}
+                    <div class="text-4xl font-bold text-primary-lighter mb-4">${{ number_format($product->price, 2) }}</div>
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        Exquisite diamond ring with a brilliant-cut diamond set in a lustrous platinum band. Perfect for
-                        engagements, anniversaries, or as a timeless gift. Handcrafted with precision and care.
+                        {{ $product->description }}
                     </p>
                 </div>
 
                 <form class="grid gap-8">
                     {{-- Color --}}
-                    <div>
+                    {{-- <div>
                         <label for="color" class="text-base text-gray-200 mb-2 block">Color</label>
                         <div class="flex items-center gap-3">
                             <label for="color-silver"
@@ -69,10 +79,10 @@
                                 Rose Gold
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- Size --}}
-                    <div>
+                    {{-- <div>
                         <label for="size" class="text-base text-gray-200 mb-2 block">Size</label>
                         <div class="flex items-center gap-3">
                             <label for="size-7"
@@ -92,7 +102,7 @@
                                 9
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- Quantity --}}
                     <div>
@@ -118,7 +128,7 @@
                     <button type="submit"
                         class="inline-flex items-center justify-center rounded-lg text-lg font-semibold h-12 px-8 bg-primary hover:bg-primary-dark text-dark shine transition-colors"
                         onclick="document.getElementById('add-to-cart-modal').classList.remove('hidden')">
-                        Add to Cart
+                        Order
                     </button>
                 </form>
             </div>
@@ -134,14 +144,14 @@
             </div>
             <div class="grid gap-4 py-4">
                 <div class="flex items-center gap-4">
-                    <img src="/elegant-silver-ring.png" alt="Diamond Elegance Ring" width="80" height="80"
+                    <img src="{{ asset('storage/' . ($primaryImage->path ?? '')) }}" alt="{{ $product->name }}" width="80" height="80"
                         class="rounded-md object-cover border border-primary/20" />
                     <div class="grid gap-1">
-                        <h3 class="font-semibold text-lg text-primary-lighter">Diamond Elegance Ring</h3>
+                        <h3 class="font-semibold text-lg text-primary-lighter">{{ $product->name }}</h3>
                         <p class="text-gray-300 text-sm">Quantity: 1</p>
                         <p class="text-gray-300 text-sm">Color: Silver</p>
                         <p class="text-gray-300 text-sm">Size: 7</p>
-                        <p class="text-primary-lighter font-bold text-xl">$299.00</p>
+                        <p class="text-primary-lighter font-bold text-xl">${{ number_format($product->price, 2) }}</p>
                     </div>
                 </div>
             </div>

@@ -11,12 +11,12 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
-        return view('orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders'));
     }
 
     public function create()
     {
-        return view('orders.create');
+        return view('admin.orders.create');
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class OrderController extends Controller
         try {
             $order = Order::create($validated);
             DB::commit();
-            return redirect()->route('orders.index')->with('success', 'Order created successfully.');
+            return redirect()->route('admin.orders.index')->with('success', 'Order created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Order creation failed: ' . $e->getMessage());
@@ -47,9 +47,9 @@ class OrderController extends Controller
     {
         try {
             $order = Order::findOrFail($id);
-            return view('orders.show', compact('order'));
+            return view('admin.orders.show', compact('order'));
         } catch (\Exception $e) {
-            return redirect()->route('orders.index')->with('error', 'Order not found');
+            return redirect()->route('admin.orders.index')->with('error', 'Order not found');
         }
     }
 
@@ -57,9 +57,9 @@ class OrderController extends Controller
     {
         try {
             $order = Order::findOrFail($id);
-            return view('orders.edit', compact('order'));
+            return view('admin.orders.edit', compact('order'));
         } catch (\Exception $e) {
-            return redirect()->route('orders.index')->with('error', 'Order not found');
+            return redirect()->route('admin.orders.index')->with('error', 'Order not found');
         }
     }
 
@@ -81,7 +81,7 @@ class OrderController extends Controller
             $order = Order::findOrFail($id);
             $order->update($validated);
             DB::commit();
-            return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
+            return redirect()->route('admin.orders.index')->with('success', 'Order updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Order update failed: ' . $e->getMessage());
@@ -95,10 +95,10 @@ class OrderController extends Controller
             $order = Order::findOrFail($id);
             $order->delete();
             DB::commit();
-            return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
+            return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('orders.index')->with('error', 'Order deletion failed: ' . $e->getMessage());
+            return redirect()->route('admin.orders.index')->with('error', 'Order deletion failed: ' . $e->getMessage());
         }
     }
 }

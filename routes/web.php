@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\UserController;
 
 // Landing Page Route
 Route::get('/', [LandingPageController::class, 'index'])->name('landing.index');
-Route::get('/product-detail', [LandingPageController::class, 'productDetail'])->name('landing.product-detail');
+Route::get('/product-detail/{id}', [LandingPageController::class, 'productDetail'])->name('landing.product-detail');
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/products/{id}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
     Route::put('/admin/products/{id}', [ProductController::class, 'update'])->name('admin.products.update');
     Route::delete('/admin/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+    Route::get('/admin/products/{id}/images/{imageId}', [ProductController::class, 'deleteImage'])->name('admin.products.destroy.image');
 
     // Order Management Routes (Admin)
     Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
@@ -61,4 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/categories/{category}/edit', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('admin.categories.edit');
     Route::put('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('admin.categories.update');
     Route::delete('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+
+    // Category Management Routes (Admin)
+    Route::get('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('admin.categories.index');
+    Route::get('/admin/categories/create', [\App\Http\Controllers\CategoryController::class, 'create'])->name('admin.categories.create');
+    Route::post('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'store'])->name('admin.categories.store');
+    Route::get('/admin/categories/{id}', [\App\Http\Controllers\CategoryController::class, 'show'])->name('admin.categories.show');
+    Route::get('/admin/categories/{id}/edit', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('admin.categories.edit');
+    Route::put('/admin/categories/{id}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('admin.categories.update');
+    Route::delete('/admin/categories/{id}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
 });

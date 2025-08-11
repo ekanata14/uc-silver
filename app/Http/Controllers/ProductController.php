@@ -29,7 +29,11 @@ class ProductController extends Controller
     // Show the form for creating a new product
     public function create()
     {
-        return view('admin.products.create');
+        $viewData = [
+            'categories' => Category::all(),
+            'communities' => Community::all()
+    ];
+        return view('admin.products.create', $viewData);
     }
 
     // Store a newly created product and its images
@@ -37,15 +41,17 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'community_id' => 'required|exists:communities,id',
             'description' => 'required|string|nullable',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            'stock' => 'nullable|integer|min:0',
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         DB::beginTransaction();
         try {
-            $product = Product::create($request->only(['name'])); // Add other fields as needed
+            $product = Product::create($validated); // Add other fields as needed
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $key => $image) {
@@ -59,7 +65,7 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('products.show', $product->id)
+            return redirect()->route('admin.products.index')
                 ->with('success', 'Product created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -71,43 +77,44 @@ class ProductController extends Controller
     public function show(String $id)
     {
         $viewData = [
-            'product' => Product::where('id', $id)->with('images')->firstOrFail()
+            'product' => Product::where('id', $id)->with('images')->firstOrFail(),
         ];
-        return view('products.show', $viewData);
+        return view('admin.products.show', $viewData);
     }
 
     // Show the form for editing the specified product
     public function edit(String $id)
     {
         $viewData = [
-            'product' => Product::where('id', $id)->with('images')->firstOrFail()
+            'product' => Product::where('id', $id)->with('images')->firstOrFail(),
+            'categories' => Category::all(),
+            'communities' => Community::all()
         ];
-        return view('products.edit', $viewData);
+        return view('admin.products.edit', $viewData);
     }
 
     // Update the specified product and its images
-    public function update(Request $request)
+    public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'id' => 'required|exists:products,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string|nullable',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            'stock' => 'nullable|integer|min:0',
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         DB::beginTransaction();
         try {
-            $product = Product::findOrFail($validated['id']);
+            $product = Product::findOrFail($id);
             $product->update($request->only(['name', 'description', 'price', 'stock']));
 
             if ($request->hasFile('images')) {
                 // Delete old images
-                foreach ($product->images as $oldImage) {
-                    Storage::disk('public')->delete($oldImage->path);
-                    $oldImage->delete();
-                }
+                // foreach ($product->images as $oldImage) {
+                //     Storage::disk('public')->delete($oldImage->path);
+                //     $oldImage->delete();
+                // }
                 // Store new images
                 foreach ($request->file('images') as $key => $image) {
                     $path = $image->store('products', 'public');
@@ -120,7 +127,7 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('products.show', $product->id)
+            return redirect()->route('admin.products.index', $product->id)
                 ->with('success', 'Product updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -129,10 +136,11 @@ class ProductController extends Controller
     }
 
     // Remove the specified product and its images
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
         DB::beginTransaction();
         try {
+            $product = Product::where('id', $id)->with('images')->firstOrFail();
             foreach ($product->images as $image) {
                 Storage::disk('public')->delete($image->path);
                 $image->delete();
@@ -140,8 +148,26 @@ class ProductController extends Controller
             $product->delete();
 
             DB::commit();
-            return redirect()->route('products.index')
+            return redirect()->route('admin.products.index')
                 ->with('success', 'Product deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function deleteImage(string $id, string $imageId)
+    {
+        DB::beginTransaction();
+        try {
+            $product = Product::where('id', $id)->with('images')->firstOrFail();
+            $image = $product->images()->findOrFail($imageId);
+            Storage::disk('public')->delete($image->path);
+            $image->delete();
+
+            DB::commit();
+            return redirect()->back()
+                ->with('success', 'Image deleted successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withErrors(['error' => $e->getMessage()]);

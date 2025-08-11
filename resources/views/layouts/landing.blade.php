@@ -127,12 +127,12 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8" data-aos="fade-left">
-                    <a href="#home" class="hover:text-primary transition-colors">Home</a>
-                    <a href="#collections" class="hover:text-primary transition-colors">Collections</a>
-                    <a href="#products" class="hover:text-primary transition-colors">Products</a>
-                    <a href="#community" class="hover:text-primary transition-colors">Community</a>
-                    <a href="#about" class="hover:text-primary transition-colors">About</a>
-                    <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+                    <a href="{{ route('landing.index') }}" class="hover:text-primary transition-colors">Home</a>
+                    <a href="{{ route('landing.index') }}#collections" class="hover:text-primary transition-colors">Collections</a>
+                    <a href="{{ route('landing.index') }}#products" class="hover:text-primary transition-colors">Products</a>
+                    <a href="{{ route('landing.index') }}#community" class="hover:text-primary transition-colors">Community</a>
+                    <a href="{{ route('landing.index') }}#about" class="hover:text-primary transition-colors">About</a>
+                    <a href="{{ route('landing.index') }}#contact" class="hover:text-primary transition-colors">Contact</a>
                 </div>
 
                 <div class="flex items-center space-x-4" data-aos="fade-left" data-aos-delay="100">
