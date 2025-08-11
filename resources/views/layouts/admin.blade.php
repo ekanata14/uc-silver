@@ -160,9 +160,9 @@
                     <h3 class="text-lg font-semibold text-primary-lighter mb-2">Management</h3>
                     <ul class="space-y-1">
                         <li>
-                            <a href="{{ route('admin.products.index') }}"
-                                class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.products.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
-                                <i class="fas fa-box-open mr-3"></i> Product Management
+                            <a href="{{ route('admin.users.index') }}"
+                                class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.users.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
+                                <i class="fas fa-users mr-3"></i> Users
                             </a>
                         </li>
                         <li>
@@ -172,15 +172,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.users.index') }}"
-                                class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.users.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
-                                <i class="fas fa-users mr-3"></i> Users
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{ route('admin.categories.index') }}"
                                 class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.categories.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
                                 <i class="fas fa-tags mr-3"></i> Categories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.products.index') }}"
+                                class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.products.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
+                                <i class="fas fa-box-open mr-3"></i> Product Management
                             </a>
                         </li>
                     </ul>
