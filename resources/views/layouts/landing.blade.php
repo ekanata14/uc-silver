@@ -128,11 +128,15 @@
 
                 <div class="hidden md:flex items-center space-x-8" data-aos="fade-left">
                     <a href="{{ route('landing.index') }}" class="hover:text-primary transition-colors">Home</a>
-                    <a href="{{ route('landing.index') }}#collections" class="hover:text-primary transition-colors">Collections</a>
-                    <a href="{{ route('landing.index') }}#products" class="hover:text-primary transition-colors">Products</a>
-                    <a href="{{ route('landing.index') }}#community" class="hover:text-primary transition-colors">Community</a>
+                    <a href="{{ route('landing.index') }}#collections"
+                        class="hover:text-primary transition-colors">Collections</a>
+                    <a href="{{ route('landing.index') }}#products"
+                        class="hover:text-primary transition-colors">Products</a>
+                    <a href="{{ route('landing.index') }}#community"
+                        class="hover:text-primary transition-colors">Community</a>
                     <a href="{{ route('landing.index') }}#about" class="hover:text-primary transition-colors">About</a>
-                    <a href="{{ route('landing.index') }}#contact" class="hover:text-primary transition-colors">Contact</a>
+                    <a href="{{ route('landing.index') }}#contact"
+                        class="hover:text-primary transition-colors">Contact</a>
                 </div>
 
                 <div class="flex items-center space-x-4" data-aos="fade-left" data-aos-delay="100">
@@ -257,6 +261,29 @@
             }
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#8e6f2e'
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#8e6f2e'
+            });
+        </script>
+    @endif
 </body>
 
 </html>

@@ -1,7 +1,11 @@
 
 @extends('layouts.admin')
 @section('content')
-    <h1 class="text-2xl font-bold text-primary-lighter mb-6">Manage Users</h1>
+    <div x-data="productModals()" class="mb-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-primary-lighter">Users</h1>
+        <a href="{{ route('admin.users.create') }}" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark">+
+            Add Users</a>
+    </div>
 
     @if ($errors->any())
         <div class="mb-4 text-red-600 bg-red-100 p-2 rounded">
@@ -42,7 +46,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="button"
-                                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500 hover:bg-red-500/20 delete-user-btn">
+                                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500 hover:bg-red-500/20 delete-btn">
                                     <i class="fas fa-trash-alt h-4 w-4"></i>
                                     <span class="sr-only">Delete</span>
                                 </button>
@@ -59,3 +63,28 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action will permanently delete the product.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+@endpush

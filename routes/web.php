@@ -21,6 +21,10 @@ Route::get('/product-detail/{id}', [LandingPageController::class, 'productDetail
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+// Order Routes
+Route::post('/order', [LandingPageController::class, 'order'])->name('landing.order.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -54,14 +58,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update');
     Route::delete('/admin/orders/{id}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
 
-    // Category Management Routes (Admin)
-    Route::get('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('admin.categories.index');
-    Route::get('/admin/categories/create', [\App\Http\Controllers\CategoryController::class, 'create'])->name('admin.categories.create');
-    Route::post('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'store'])->name('admin.categories.store');
-    Route::get('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'show'])->name('admin.categories.show');
-    Route::get('/admin/categories/{category}/edit', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('admin.categories.edit');
-    Route::put('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('admin.categories.update');
-    Route::delete('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+    // // Category Management Routes (Admin)
+    // Route::get('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('admin.categories.index');
+    // Route::get('/admin/categories/create', [\App\Http\Controllers\CategoryController::class, 'create'])->name('admin.categories.create');
+    // Route::post('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'store'])->name('admin.categories.store');
+    // Route::get('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'show'])->name('admin.categories.show');
+    // Route::get('/admin/categories/{category}/edit', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('admin.categories.edit');
+    // Route::put('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('admin.categories.update');
+    // Route::delete('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
 
     // Category Management Routes (Admin)
     Route::get('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('admin.categories.index');
@@ -71,4 +75,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/categories/{id}/edit', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('admin.categories.edit');
     Route::put('/admin/categories/{id}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('admin.categories.update');
     Route::delete('/admin/categories/{id}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+
+    // Community Management Routes (Admin)
+    Route::get('/admin/communities', [\App\Http\Controllers\CommunityController::class, 'index'])->name('admin.communities.index');
+    Route::get('/admin/communities/create', [\App\Http\Controllers\CommunityController::class, 'create'])->name('admin.communities.create');
+    Route::post('/admin/communities', [\App\Http\Controllers\CommunityController::class, 'store'])->name('admin.communities.store');
+    Route::get('/admin/communities/{id}', [\App\Http\Controllers\CommunityController::class, 'show'])->name('admin.communities.show');
+    Route::get('/admin/communities/{id}/edit', [\App\Http\Controllers\CommunityController::class, 'edit'])->name('admin.communities.edit');
+    Route::put('/admin/communities/{id}', [\App\Http\Controllers\CommunityController::class, 'update'])->name('admin.communities.update');
+    Route::delete('/admin/communities/{id}', [\App\Http\Controllers\CommunityController::class, 'destroy'])->name('admin.communities.destroy');
 });

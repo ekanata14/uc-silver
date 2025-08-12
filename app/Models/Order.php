@@ -10,11 +10,13 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'invoice_id',
         'product_id',
         'user_id',
         'customer_name',
         'customer_email',
         'customer_address',
+        'payment_receipt', // New field for payment receipt
         'quantity',
         'total_price',
         'status',

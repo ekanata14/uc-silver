@@ -153,6 +153,12 @@
                                 <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.orders.index') }}"
+                                class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.orders.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
+                                <i class="fas fa-shopping-cart mr-3"></i> Orders
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -166,15 +172,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.orders.index') }}"
-                                class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.orders.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
-                                <i class="fas fa-shopping-cart mr-3"></i> Orders
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{ route('admin.categories.index') }}"
                                 class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.categories.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
                                 <i class="fas fa-tags mr-3"></i> Categories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.communities.index') }}"
+                                class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.categories.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
+                                <i class="fas fa-tags mr-3"></i> Community
                             </a>
                         </li>
                         <li>
@@ -190,10 +196,13 @@
                     <h3 class="text-lg font-semibold text-primary-lighter mb-2">Settings</h3>
                     <ul class="space-y-1">
                         <li>
-                            <a href="#"
-                                class="flex items-center p-2 rounded-md text-gray-300 hover:bg-primary/20 hover:text-primary-lighter transition-colors">
-                                <i class="fas fa-sign-out-alt mr-3"></i> Logout
-                            </a>
+                            <form method="POST" action="{{ route('auth.logout') }}">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full flex items-center p-2 rounded-md text-gray-300 hover:bg-primary/20 hover:text-primary-lighter transition-colors">
+                                    <i class="fas fa-sign-out-alt mr-3"></i> Logout
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </div>

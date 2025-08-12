@@ -13,6 +13,7 @@
             <table class="w-full caption-bottom text-sm">
                 <thead class="[&_tr]:border-b">
                     <tr class="border-primary/30">
+                        <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">No</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Order ID</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Customer Name</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Email</th>
@@ -36,12 +37,12 @@
                             <td class="p-4 align-middle">${{ number_format($order->total_price, 2) }}</td>
                             <td class="p-4 align-middle">{{ $order->status }}</td>
                             <td class="p-4 align-middle text-right">
-                                <a href="{{ route('orders.edit', $order->id) }}"
+                                <a href="{{ route('admin.orders.edit', $order->id) }}"
                                     class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 text-primary-lighter hover:bg-primary/20">
                                     <i class="fas fa-edit h-4 w-4"></i>
                                     <span class="sr-only">Edit</span>
                                 </a>
-                                <form action="{{ route('orders.destroy', $order->id) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button
