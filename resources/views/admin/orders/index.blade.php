@@ -8,9 +8,18 @@
         </a> --}}
     </div>
 
+    <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-2">
+            <input type="text" id="order-search" placeholder="Search orders..." class="rounded-md border px-3 py-2 text-sm bg-dark-light text-primary-lighter focus:outline-none focus:ring-2 focus:ring-primary/50" />
+            <button type="button" id="search-btn" class="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90">Search</button>
+        </div>
+        <button type="button" id="export-excel" class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">
+            <i class="fas fa-file-excel mr-2"></i> Download Excel
+        </button>
+    </div>
     <div class="bg-dark-light rounded-lg p-6 border border-primary/20 jewelry-glow">
         <div class="relative w-full overflow-auto">
-            <table class="w-full caption-bottom text-sm">
+            <table id="orders-table" class="w-full caption-bottom text-sm">
                 <thead class="[&_tr]:border-b">
                     <tr class="border-primary/30">
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">No</th>
@@ -58,5 +67,39 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    @push('scripts')
+        <!-- DataTables JS & CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+        <!-- SheetJS for Excel export -->
+        <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var table = $('#orders-table').DataTable({
+                    "paging": true,
+                    "searching": true,
+                    "info": true
+                });
+
+                // Custom search
+                $('#search-btn').on('click', function() {
+                    table.search($('#order-search').val()).draw();
+                });
+                $('#order-search').on('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        table.search(this.value).draw();
+                    }
+                });
+
+                // Export to Excel
+                $('#export-excel').on('click', function() {
+                    var wb = XLSX.utils.table_to_book(document.getElementById('orders-table'), {sheet:"Orders"});
+                    XLSX.writeFile(wb, 'orders.xlsx');
+                });
+            });
+        </script>
+    @endpush
     </div>
 @endsection
