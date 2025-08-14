@@ -53,7 +53,11 @@
                                         $product->images->first();
                                 @endphp
                                 @if ($primaryImage)
-                                    <img src="{{ asset('storage/' . $primaryImage->path) }}" alt="{{ $product->name }}"
+                                    @php
+                                        $imagePath = $primaryImage->path;
+                                        $isUrl = filter_var($imagePath, FILTER_VALIDATE_URL);
+                                    @endphp
+                                    <img src="{{ $isUrl ? $imagePath : asset('storage/' . $imagePath) }}" alt="{{ $product->name }}"
                                         width="60" height="60" class="rounded-md object-cover" />
                                 @else
                                     <img src="/placeholder.svg?height=60&width=60" alt="{{ $product->name }}" width="60"

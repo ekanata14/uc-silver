@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_email');
             $table->string('customer_address'); 
+            $table->string('customer_mobile_phone'); 
             $table->string('payment_receipt')->nullable(); // Optional field for payment receipt
             $table->integer('quantity');
             $table->decimal('total_price', 10, 2);

@@ -16,6 +16,7 @@ class Order extends Model
         'customer_name',
         'customer_email',
         'customer_address',
+        'customer_mobile_phone',
         'payment_receipt', // New field for payment receipt
         'quantity',
         'total_price',

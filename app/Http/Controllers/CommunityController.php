@@ -111,6 +111,12 @@ class CommunityController extends Controller
         try {
             DB::beginTransaction();
             $community = Community::findOrFail($id);
+
+            // Delete the image file if exists
+            if ($community->image) {
+                \Storage::disk('public')->delete($community->image);
+            }
+
             $community->delete();
             DB::commit();
             return redirect()->route('admin.communities.index')->with('success', 'Community deleted successfully.');

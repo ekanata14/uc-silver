@@ -169,6 +169,11 @@
                                     class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none">
                             </div>
                             <div class="grid gap-2">
+                                <label class="text-base text-gray-200">Mobile Phone</label>
+                                <input type="text" name="customer_mobile_phone" required
+                                    class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none">
+                            </div>
+                            <div class="grid gap-2">
                                 <label class="text-base text-gray-200">Address</label>
                                 <textarea name="customer_address" required rows="2"
                                     class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none"></textarea>
