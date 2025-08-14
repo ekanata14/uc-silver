@@ -157,35 +157,34 @@
                     Discover our exquisite collection of handcrafted jewelry pieces
                 </p>
             </div>
-
             <!-- Filter Buttons -->
-            <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex flex-wrap justify-center gap-4 mb-12 max-h-32 overflow-y-auto" data-aos="fade-up" data-aos-delay="300">
                 <button
-                    class="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all border border-white/30">
+                    class="filter-btn px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all border border-white/30"
+                    data-category="all">
                     All Products
                 </button>
-                <button
-                    class="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all border border-white/20">
-                    Rings
-                </button>
-                <button
-                    class="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all border border-white/20">
-                    Necklaces
-                </button>
-                <button
-                    class="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all border border-white/20">
-                    Earrings
-                </button>
-                <button
-                    class="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all border border-white/20">
-                    Bracelets
-                </button>
+                @foreach($categories as $category)
+                    <button
+                        class="filter-btn px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all border border-white/30"
+                        data-category="{{ strtolower($category->name) }}">
+                        {{ $category->name }}
+                    </button>
+                @endforeach
             </div>
+            <!-- Product Search & Filter -->
+            <div class="flex flex-col md:flex-row gap-4 mb-8 justify-center items-center text-white" data-aos="fade-up" data-aos-delay="200">
+                <input type="text" id="product-search" placeholder="Search products..." class="px-6 py-3 rounded-full bg-white/20 text-white focus:outline-none focus:bg-white/30 transition-all border border-white/30 w-full md:w-1/3" />
+            </div>
+
             <!-- Product Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div id="product-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 @foreach($products as $product)
                     <a href="{{ route('landing.product-detail', $product->id) }}" class="product-card rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-1 block"
-                        data-aos="fade-up" data-aos-delay="{{ 100 + $loop->index * 100 }}">
+                        data-aos="fade-up" data-aos-delay="{{ 100 + $loop->index * 100 }}"
+                        data-name="{{ strtolower($product->name) }}"
+                        data-description="{{ strtolower($product->description) }}"
+                        data-category="{{ strtolower($product->category->name) }}">
                         <div class="relative h-64 bg-gradient-to-br from-primary-lighter to-primary-dark flex items-center justify-center">
                             @if($product->images && count($product->images) > 0)
                                 @php
@@ -202,6 +201,7 @@
                         </div>
                         <div class="p-6 bg-dark/80 backdrop-blur-sm">
                             <h3 class="text-xl font-serif font-bold text-white mb-2">{{ $product->name }}</h3>
+                            <h4 class="text-md font-serif font-normal text-yellow-400 mb-2 product-category" id="product-category">{{ $product->category->name }}</h4>
                             <p class="text-gray-300 text-sm mb-4">{{ $product->description }}</p>
                             <div class="flex items-center justify-end">
                                 <button
@@ -214,13 +214,102 @@
                 @endforeach
             </div>
 
-            <!-- Load More Button -->
-            <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="900">
-                <button
-                    class="bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shine">
-                    Load More Products
-                </button>
-            </div>
+            <!-- JS Pagination Controls -->
+            <div id="pagination-controls" class="flex justify-center mt-12" data-aos="fade-up" data-aos-delay="900"></div>
+
+            <script>
+                // JS Pagination, Search & Category Filter
+                document.addEventListener('DOMContentLoaded', function () {
+                    const products = Array.from(document.querySelectorAll('.product-card'));
+                    const grid = document.getElementById('product-grid');
+                    const pagination = document.getElementById('pagination-controls');
+                    const searchInput = document.getElementById('product-search');
+                    const filterBtns = document.querySelectorAll('.filter-btn');
+                    const perPage = 8;
+                    let currentPage = 1;
+                    let filteredProducts = products;
+                    let selectedCategory = 'all';
+
+                    function renderProducts() {
+                        grid.innerHTML = '';
+                        const start = (currentPage - 1) * perPage;
+                        const end = start + perPage;
+                        filteredProducts.slice(start, end).forEach(card => grid.appendChild(card));
+                    }
+
+                    function renderPagination() {
+                        pagination.innerHTML = '';
+                        const totalPages = Math.ceil(filteredProducts.length / perPage);
+                        if (totalPages <= 1) return;
+
+                        const nav = document.createElement('nav');
+                        nav.className = "inline-flex space-x-2 bg-dark/60 backdrop-blur-sm px-6 py-4 rounded-full shadow-lg border border-primary/30";
+
+                        // Prev
+                        const prev = document.createElement('button');
+                        prev.className = `px-4 py-2 rounded-full ${currentPage === 1 ? 'bg-gray-700 text-gray-400 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-dark transition-all'}`;
+                        prev.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                        prev.disabled = currentPage === 1;
+                        prev.onclick = () => { if (currentPage > 1) { currentPage--; update(); } };
+                        nav.appendChild(prev);
+
+                        // Pages
+                        for (let i = 1; i <= totalPages; i++) {
+                            const btn = document.createElement('button');
+                            btn.className = `px-4 py-2 rounded-full ${i === currentPage ? 'bg-primary text-white font-bold shadow-md' : 'bg-white/10 text-white hover:bg-primary hover:text-white transition-all'}`;
+                            btn.textContent = i;
+                            btn.disabled = i === currentPage;
+                            btn.onclick = () => { currentPage = i; update(); };
+                            nav.appendChild(btn);
+                        }
+
+                        // Next
+                        const next = document.createElement('button');
+                        next.className = `px-4 py-2 rounded-full ${currentPage === totalPages ? 'bg-gray-700 text-gray-400 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-dark transition-all'}`;
+                        next.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                        next.disabled = currentPage === totalPages;
+                        next.onclick = () => { if (currentPage < totalPages) { currentPage++; update(); } };
+                        nav.appendChild(next);
+
+                        pagination.appendChild(nav);
+                    }
+
+                    function update() {
+                        renderProducts();
+                        renderPagination();
+                    }
+
+                    function filterProducts() {
+                        const q = searchInput.value.trim().toLowerCase();
+                        filteredProducts = products.filter(card => {
+                            const name = card.dataset.name;
+                            const desc = card.dataset.description;
+                            const cat = card.dataset.category;
+                            const matchesSearch = name.includes(q) || desc.includes(q);
+                            const matchesCategory = selectedCategory === 'all' || cat === selectedCategory;
+                            return matchesSearch && matchesCategory;
+                        });
+                        currentPage = 1;
+                        update();
+                    }
+
+                    searchInput.addEventListener('input', filterProducts);
+
+                    filterBtns.forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            filterBtns.forEach(b => b.classList.remove('bg-primary', 'text-dark'));
+                            this.classList.add('bg-primary', 'text-dark');
+                            selectedCategory = this.dataset.category;
+                            filterProducts();
+                        });
+                    });
+
+                    // Set "All Products" as active by default
+                    filterBtns[0].classList.add('bg-primary', 'text-dark');
+
+                    update();
+                });
+            </script>
         </div>
     </section>
 

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 // Models
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Category;
+
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -22,6 +24,7 @@ class LandingPageController extends Controller
             'title' => 'Welcome to Our Store',
             'description' => 'Explore our wide range of products and enjoy exclusive offers.',
             'products' => Product::latest()->get(), // Fetch latest 5 products for the landing page
+            'categories' => Category::all(),
         ];
         return view('welcome', $viewData);
     }
