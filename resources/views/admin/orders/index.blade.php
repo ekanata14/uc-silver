@@ -41,9 +41,9 @@
                             <td class="p-4 align-middle">{{ $order->customer_name }}</td>
                             <td class="p-4 align-middle">{{ $order->customer_email }}</td>
                             <td class="p-4 align-middle">{{ $order->customer_address }}</td>
-                            <td class="p-4 align-middle">{{ $order->product_id }}</td>
+                            <td class="p-4 align-middle">{{ $order->product->name }}</td>
                             <td class="p-4 align-middle">{{ $order->quantity }}</td>
-                            <td class="p-4 align-middle">${{ number_format($order->total_price, 2) }}</td>
+                            <td class="p-4 align-middle">IDR. {{ number_format($order->total_price, 0) }}</td>
                             <td class="p-4 align-middle">{{ $order->status }}</td>
                             <td class="p-4 align-middle text-right">
                                 <a href="{{ route('admin.orders.edit', $order->id) }}"

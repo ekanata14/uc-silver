@@ -52,7 +52,7 @@
                         </div>
                         <span class="text-gray-400 text-sm ml-2">(24 Reviews)</span>
                     </div> --}}
-                    <div class="text-4xl font-bold text-primary-lighter mb-4">IDR. {{ number_format($product->price) }}</div>
+                    <div class="text-4xl font-bold text-primary-lighter mb-4">IDR. {{ number_format($product->price, 0, ',', '.') }}</div>
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
                         {{ $product->description }}
                     </p>
@@ -61,7 +61,7 @@
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
-                    <input type="hidden" name="status" value="pending">
+                    <input type="hidden" name="status" value="paid">
                     <input type="hidden" name="total_price" id="total_price" value="{{ $product->price }}">
 
                     {{-- Quantity --}}
