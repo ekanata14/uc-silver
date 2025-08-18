@@ -30,18 +30,18 @@ After cloning this repository, follow these steps to set up Laravel 12:
 
     - Set your database and other environment variables as needed.
 
-6. **Run migrations (optional)**
+6. **Run migrations**
 
     ```
     php artisan migrate
     ```
 
-7. **Storage Link (optional)**
+7. **Storage Link**
 
     ```
     php artisan storage:link
     ```
-
+8. **Start Development Server**
     ```
     composer run dev
     ```
