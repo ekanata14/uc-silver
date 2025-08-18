@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 
 // Admin Controller
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\BankAccountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\UserController;
@@ -27,10 +28,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::post('/order', [LandingPageController::class, 'order'])->name('landing.order.store');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/admin/bank', [DashboardController::class, 'bank'])->name('admin.bank');
+    Route::put('/admin/bank/update/{id}', [DashboardController::class, 'update'])->name('admin.bank.update');
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-
+   
     // User Management Routes (Admin)
-
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
     Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');

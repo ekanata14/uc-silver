@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Community;
+use App\Models\BankAccount;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -113,6 +114,20 @@ class DatabaseSeeder extends Seeder
 
         foreach ($products as $product) {
             \App\Models\Product::create($product);
+        }
+
+        // Seeder for bank accounts
+        $bankAccounts = [
+            [
+                'bank_name' => 'Bank BCA',
+                'account_number' => '123456789',
+                'account_name' => 'John Doe',
+                'bank_code' => '123456',
+            ],
+        ];
+
+        foreach ($bankAccounts as $bankAccount) {
+            BankAccount::create($bankAccount);
         }
     }
 }

@@ -21,7 +21,7 @@
                 <!-- Left Content -->
                 <div class="text-center lg:text-left">
                     <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6" data-aos="fade-up">
-                        <span class="gradient-text">UC Silver</span>
+                        <span class="gradient-text">Celuk Silver Creative</span>
                     </h1>
                     <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl" data-aos="fade-up" data-aos-delay="200">
                         Where Elegance Meets Community. Discover exquisite jewelry crafted with passion and connect with

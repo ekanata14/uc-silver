@@ -159,6 +159,12 @@
                                 <i class="fas fa-shopping-cart mr-3"></i> Orders
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.bank') }}"
+                                class="flex items-center p-2 rounded-md {{ request()->routeIs('admin.bank.*') ? 'bg-primary/20 text-primary-lighter font-medium' : 'text-gray-300 hover:bg-primary/20 hover:text-primary-lighter' }} transition-colors">
+                                <i class="fas fa-shopping-cart mr-3"></i> Bank Account
+                            </a>
+                        </li>
                     </ul>
                 </div>
 

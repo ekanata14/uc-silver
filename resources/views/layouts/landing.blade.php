@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UC Silver - Premium Jewelry Community</title>
+    <title>Celuk Silver Creative</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -123,7 +123,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2" data-aos="fade-right">
                     <i class="fas fa-gem text-primary text-2xl"></i>
-                    <span class="text-2xl font-serif font-bold gradient-text">UC Silver</span>
+                    <span class="text-2xl font-serif font-bold gradient-text">Celuk Silver Creative</span>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8" data-aos="fade-left">
@@ -161,7 +161,7 @@
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
                         <i class="fas fa-gem text-primary text-2xl"></i>
-                        <span class="text-2xl font-serif font-bold gradient-text">UC Silver</span>
+                        <span class="text-2xl font-serif font-bold gradient-text">Celuk Silver Creative</span>
                     </div>
                     <p class="text-gray-400 mb-4">Creating timeless jewelry pieces that celebrate life's precious
                         moments.</p>
@@ -220,7 +220,7 @@
             </div>
 
             <div class="border-t border-primary/20 mt-12 pt-8 text-center">
-                <p class="text-gray-400">© 2024 UC Silver. All rights reserved. Crafted with passion for jewelry
+                <p class="text-gray-400">© {{ date('Y') }} Celuk Silver Creative. All rights reserved. Crafted with passion for jewelry
                     enthusiasts.</p>
             </div>
         </div>
