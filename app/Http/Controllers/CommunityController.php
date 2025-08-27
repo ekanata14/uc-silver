@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+// Models
+use App\Models\BankAccount;
 use App\Models\Community;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -37,6 +40,10 @@ class CommunityController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'account_number' => 'required|string|max:50',
+            'account_name' => 'required|string|max:255',
+            'bank_name' => 'required|string|max:255',
+            'bank_code' => 'required|string|max:50',
         ]);
 
         try {
@@ -46,8 +53,24 @@ class CommunityController extends Controller
                 $imagePath = $request->file('image')->store('communities', 'public');
                 $validated['image'] = $imagePath;
             }
+            $communityData = [
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'image' => $validated['image'] ?? null,
+            ];
 
-            Community::create($validated);
+            $community = Community::create($communityData);
+
+            $bankAccountData = [
+                'community_id' => $community->id,
+                'account_number' => $validated['account_number'],
+                'account_name' => $validated['account_name'],
+                'bank_name' => $validated['bank_name'],
+                'bank_code' => $validated['bank_code'],
+            ];
+
+            $bankAccount = BankAccount::create($bankAccountData);
+
             DB::commit();
             return redirect()->route('admin.communities.index')->with('success', 'Community created successfully.');
         } catch (\Exception $e) {
@@ -83,18 +106,50 @@ class CommunityController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'account_number' => 'required|string|max:50',
+            'account_name' => 'required|string|max:255',
+            'bank_name' => 'required|string|max:255',
+            'bank_code' => 'required|string|max:50',
         ]);
 
         try {
             DB::beginTransaction();
+
             $community = Community::findOrFail($id);
 
+            // Handle image update
             if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($community->image) {
+                    \Storage::disk('public')->delete($community->image);
+                }
                 $imagePath = $request->file('image')->store('communities', 'public');
                 $validated['image'] = $imagePath;
             }
 
-            $community->update($validated);
+            // Update community
+            $community->update([
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'image' => $validated['image'] ?? $community->image,
+            ]);
+
+            // Update or create bank account
+            $bankAccountData = [
+                'account_number' => $validated['account_number'],
+                'account_name' => $validated['account_name'],
+                'bank_name' => $validated['bank_name'],
+                'bank_code' => $validated['bank_code'],
+            ];
+
+            $bankAccount = BankAccount::where('community_id', $community->id)->first();
+            if ($bankAccount) {
+                $bankAccount->update($bankAccountData);
+            } else {
+                $bankAccountData['community_id'] = $community->id;
+                BankAccount::create($bankAccountData);
+            }
+
             DB::commit();
             return redirect()->route('admin.communities.index')->with('success', 'Community updated successfully.');
         } catch (\Exception $e) {

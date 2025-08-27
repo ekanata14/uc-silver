@@ -18,4 +18,9 @@ class Community extends Model
     {
         return $this->hasMany(Product::class, 'id_community');
     }
+
+    public function bankAccount()
+    {
+        return $this->hasOne(BankAccount::class, 'community_id');
+    }
 }

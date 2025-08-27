@@ -38,6 +38,7 @@
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Email</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Address</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Product ID</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Community</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Quantity</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Total Price</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Status</th>
@@ -53,6 +54,7 @@
                             <td class="p-4 align-middle">{{ $order->customer_email }}</td>
                             <td class="p-4 align-middle">{{ $order->customer_address }}</td>
                             <td class="p-4 align-middle">{{ $order->product->name }}</td>
+                            <td class="p-4 align-middle">{{ $order->product->community->name }}</td>
                             <td class="p-4 align-middle">{{ $order->quantity }}</td>
                             <td class="p-4 align-middle">IDR. {{ number_format($order->total_price, 2) }}</td>
                             <td class="p-4 align-middle">{{ $order->status }}</td>

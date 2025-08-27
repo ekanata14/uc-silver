@@ -120,96 +120,115 @@
 
                 {{-- Order Modal --}}
                 <div id="order-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 transition-all duration-300 ease-in-out hidden">
-                    <div
-                        class="relative w-full max-w-lg mx-4 sm:mx-0 bg-gradient-to-br from-dark-light via-dark to-primary/10 text-white border border-primary/40 rounded-2xl p-6 shadow-2xl animate__animated animate__fadeInUp">
+                    <div class="relative w-full max-w-3xl mx-4 sm:mx-0 bg-gradient-to-br from-dark-light via-dark to-primary/10 text-white border border-primary/40 rounded-2xl p-6 shadow-2xl animate__animated animate__fadeInUp">
                         <button type="button"
                             class="absolute top-4 right-4 text-gray-400 hover:text-primary-lighter transition-colors text-xl focus:outline-none"
                             onclick="document.getElementById('order-modal').classList.add('hidden')">
                             <i class="fas fa-times"></i>
                         </button>
                         <form id="order-popup-form" method="POST" action="{{ route('landing.order.store') }}"
-                            class="grid gap-4" enctype="multipart/form-data">
+                            class="grid gap-6" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
                             <input type="hidden" name="status" value="pending">
 
-                            <h2 class="text-2xl sm:text-3xl font-serif gradient-text mb-2 text-center">Complete Your Order</h2>
-                            <div class="grid gap-2">
-                                <label class="text-base text-gray-200 font-semibold">Total Price</label>
-                                <div class="flex items-center bg-gradient-to-r from-primary/10 to-dark-light rounded-lg p-2 shadow-inner">
-                                    <span class="text-primary-lighter font-bold text-lg mr-2">IDR.</span>
-                                    <input type="text" id="popup-total-price" name="total_price" value="{{ $product->price }}" readonly
-                                        class="h-9 w-full rounded-lg border-2 border-primary/30 bg-dark-light text-primary-lighter px-3 py-2 text-lg font-bold focus:ring-primary focus:outline-none text-right shadow-sm transition-all duration-150" />
-                                </div>
-                            </div>
-                            <div class="grid gap-2">
-                                <label class="text-base text-gray-200 font-semibold">Quantity</label>
-                                <div class="flex items-center gap-3 bg-gradient-to-r from-primary/10 to-dark-light rounded-lg p-2 shadow-inner">
-                                    <button type="button" id="popup-decrease-qty"
-                                        class="inline-flex items-center justify-center rounded-full text-sm font-bold border-2 border-primary bg-dark-light text-primary-lighter hover:bg-primary/20 hover:border-primary h-9 w-9 transition-all duration-150">
-                                        <i class="fas fa-minus h-4 w-4"></i>
-                                    </button>
-                                    <input type="number" id="popup-quantity" name="quantity" min="1" value="1"
-                                        class="h-9 w-20 rounded-lg border-2 border-primary/30 bg-dark-light text-gray-200 px-3 py-2 text-lg font-semibold focus:ring-primary focus:outline-none text-center shadow-sm transition-all duration-150" />
-                                    <button type="button" id="popup-increase-qty"
-                                        class="inline-flex items-center justify-center rounded-full text-sm font-bold border-2 border-primary bg-dark-light text-primary-lighter hover:bg-primary/20 hover:border-primary h-9 w-9 transition-all duration-150">
-                                        <i class="fas fa-plus h-4 w-4"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="grid gap-2">
-                                <label class="text-base text-gray-200">Name</label>
-                                <input type="text" name="customer_name" required
-                                    class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none">
-                            </div>
-                            <div class="grid gap-2">
-                                <label class="text-base text-gray-200">Email</label>
-                                <input type="email" name="customer_email" required
-                                    class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none">
-                            </div>
-                            <div class="grid gap-2">
-                                <label class="text-base text-gray-200">Mobile Phone</label>
-                                <input type="text" name="customer_mobile_phone" required
-                                    class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none">
-                            </div>
-                            <div class="grid gap-2">
-                                <label class="text-base text-gray-200">Address</label>
-                                <textarea name="customer_address" required rows="2"
-                                    class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none"></textarea>
-                            </div>
-                            <div class="grid gap-2">
-                                <label class="text-base text-gray-200">Bank Account Details</label>
-                                <div class="bg-dark border border-primary/30 rounded-md p-3 text-sm text-gray-200">
-                                    <div><span class="font-semibold">Bank Name:</span> BCA</div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="font-semibold">Account Number:</span>
-                                        <span id="account-number">1234567890</span>
-                                        <button type="button" onclick="
-                                            navigator.clipboard.writeText(document.getElementById('account-number').textContent).then(function() {
-                                                Swal.fire({
-                                                    icon: 'success',
-                                                    title: 'Copied!',
-                                                    text: 'Account number copied to clipboard.',
-                                                    timer: 1500,
-                                                    showConfirmButton: false
-                                                });
-                                            });
-                                        "
-                                            class="ml-2 px-2 py-1 rounded bg-primary text-dark text-xs hover:bg-primary-dark focus:outline-none transition-all duration-150">
-                                            <i class="fas fa-copy"></i> Copy
-                                        </button>
+                            <h2 class="text-2xl sm:text-3xl font-serif gradient-text mb-2 text-center col-span-2">Complete Your Order</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="grid gap-4">
+                                    <div class="grid gap-2">
+                                        <label class="text-base text-gray-200 font-semibold">Total Price</label>
+                                        <div class="flex items-center bg-gradient-to-r from-primary/10 to-dark-light rounded-lg p-2 shadow-inner">
+                                            <span class="text-primary-lighter font-bold text-lg mr-2">IDR.</span>
+                                            <input type="text" id="popup-total-price" name="total_price" value="{{ $product->price }}" readonly
+                                                class="h-9 w-full rounded-lg border-2 border-primary/30 bg-dark-light text-primary-lighter px-3 py-2 text-lg font-bold focus:ring-primary focus:outline-none text-right shadow-sm transition-all duration-150" />
+                                        </div>
                                     </div>
-                                    <div><span class="font-semibold">Account Name:</span> PT UC Silver</div>
+                                    <div class="grid gap-2">
+                                        <label class="text-base text-gray-200 font-semibold">Quantity</label>
+                                        <div class="flex items-center gap-3 bg-gradient-to-r from-primary/10 to-dark-light rounded-lg p-2 shadow-inner">
+                                            <button type="button" id="popup-decrease-qty"
+                                                class="inline-flex items-center justify-center rounded-full text-sm font-bold border-2 border-primary bg-dark-light text-primary-lighter hover:bg-primary/20 hover:border-primary h-9 w-9 transition-all duration-150">
+                                                <i class="fas fa-minus h-4 w-4"></i>
+                                            </button>
+                                            <input type="number" id="popup-quantity" name="quantity" min="1" value="1"
+                                                class="h-9 w-20 rounded-lg border-2 border-primary/30 bg-dark-light text-gray-200 px-3 py-2 text-lg font-semibold focus:ring-primary focus:outline-none text-center shadow-sm transition-all duration-150" />
+                                            <button type="button" id="popup-increase-qty"
+                                                class="inline-flex items-center justify-center rounded-full text-sm font-bold border-2 border-primary bg-dark-light text-primary-lighter hover:bg-primary/20 hover:border-primary h-9 w-9 transition-all duration-150">
+                                                <i class="fas fa-plus h-4 w-4"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="grid gap-2">
+                                        <label class="text-base text-gray-200">Bank Account Details</label>
+                                        @if($product->community && $product->community->bankAccount)
+                                            <div class="bg-gradient-to-br from-primary/10 via-dark-light to-primary/20 border border-primary/40 rounded-lg p-4 text-sm text-gray-200 shadow-md">
+                                                <div class="mb-2 flex items-center gap-2">
+                                                    <span class="font-semibold text-primary-lighter">Bank Name:</span>
+                                                    <span>{{ $product->community->bankAccount->bank_name }}</span>
+                                                </div>
+                                                <div class="mb-2 flex items-center gap-2">
+                                                    <span class="font-semibold text-primary-lighter">Account Number:</span>
+                                                    <span id="account-number" class="font-mono px-2 py-1 rounded bg-dark-light border border-primary/30">{{ $product->community->bankAccount->account_number }}</span>
+                                                    <button type="button"
+                                                        onclick="
+                                                            navigator.clipboard.writeText(document.getElementById('account-number').textContent).then(function() {
+                                                                Swal.fire({
+                                                                    icon: 'success',
+                                                                    title: 'Copied!',
+                                                                    text: 'Account number copied to clipboard.',
+                                                                    timer: 1500,
+                                                                    showConfirmButton: false
+                                                                });
+                                                            });
+                                                        "
+                                                        class="ml-2 px-2 py-1 rounded bg-primary text-dark text-xs font-semibold hover:bg-primary-dark focus:outline-none transition-all duration-150 flex items-center gap-1"
+                                                        title="Copy to clipboard">
+                                                        <i class="fas fa-copy"></i> Copy
+                                                    </button>
+                                                </div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-semibold text-primary-lighter">Account Name:</span>
+                                                    <span>{{ $product->community->bankAccount->account_name }}</span>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="bg-dark border border-primary/30 rounded-md p-3 text-sm text-gray-200">
+                                                <span>No bank account information available.</span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="grid gap-4">
+                                    <div class="grid gap-2">
+                                        <label class="text-base text-gray-200">Name</label>
+                                        <input type="text" name="customer_name" required
+                                            class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none">
+                                    </div>
+                                    <div class="grid gap-2">
+                                        <label class="text-base text-gray-200">Email</label>
+                                        <input type="email" name="customer_email" required
+                                            class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none">
+                                    </div>
+                                    <div class="grid gap-2">
+                                        <label class="text-base text-gray-200">Mobile Phone</label>
+                                        <input type="text" name="customer_mobile_phone" required
+                                            class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none">
+                                    </div>
+                                    <div class="grid gap-2">
+                                        <label class="text-base text-gray-200">Address</label>
+                                        <textarea name="customer_address" required rows="2"
+                                            class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none"></textarea>
+                                    </div>
+                                    <div class="grid gap-2">
+                                        <label class="text-base text-gray-200">Upload Payment Receipt</label>
+                                        <input type="file" name="payment_receipt" accept="image/*,application/pdf" required
+                                            class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none file:bg-primary file:text-dark file:rounded-md file:border-none">
+                                        <span class="text-xs text-gray-400">Accepted formats: JPG, PNG, PDF</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="grid gap-2">
-                                <label class="text-base text-gray-200">Upload Payment Receipt</label>
-                                <input type="file" name="payment_receipt" accept="image/*,application/pdf" required
-                                    class="rounded-md border bg-dark-light border-primary/30 text-gray-200 px-3 py-2 text-sm focus:ring-primary focus:outline-none file:bg-primary file:text-dark file:rounded-md file:border-none">
-                                <span class="text-xs text-gray-400">Accepted formats: JPG, PNG, PDF</span>
-                            </div>
-                            <div class="flex flex-col sm:flex-row gap-2 justify-end mt-4">
+                            <div class="flex flex-col sm:flex-row gap-2 justify-end mt-4 col-span-2">
                                 <button type="button"
                                     class="inline-flex items-center justify-center rounded-md text-sm font-medium border bg-dark border-primary/30 text-primary-lighter hover:bg-primary/20 hover:border-primary h-10 px-4 py-2 w-full sm:w-auto transition-all duration-150"
                                     onclick="document.getElementById('order-modal').classList.add('hidden')">

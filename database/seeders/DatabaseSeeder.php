@@ -110,18 +110,59 @@ class DatabaseSeeder extends Seeder
                 'price' => 300000,
                 'stock' => 15,
             ],
+            [
+                'category_id' => 4,
+                'community_id' => 1,
+                'name' => 'Silver Gift Box',
+                'description' => 'A beautiful silver box, ideal for gifting.',
+                'price' => 300000,
+                'stock' => 15,
+            ],
+            [
+                'category_id' => 4,
+                'community_id' => 1,
+                'name' => 'Silver Gift Box',
+                'description' => 'A beautiful silver box, ideal for gifting.',
+                'price' => 300000,
+                'stock' => 15,
+            ],
+            [
+                'category_id' => 4,
+                'community_id' => 1,
+                'name' => 'Silver Gift Box',
+                'description' => 'A beautiful silver box, ideal for gifting.',
+                'price' => 300000,
+                'stock' => 15,
+            ],
         ];
 
         foreach ($products as $product) {
             \App\Models\Product::create($product);
         }
-
         // Seeder for bank accounts
         $bankAccounts = [
             [
                 'bank_name' => 'Bank BCA',
                 'account_number' => '123456789',
                 'account_name' => 'John Doe',
+                // Assign a random community_id between 1 and 3
+                'community_id' => 1,
+                'bank_code' => '123456',
+            ],
+            [
+                'bank_name' => 'Bank Maspion',
+                'account_number' => '123456789',
+                'account_name' => 'John Doe',
+                // Assign a random community_id between 1 and 3
+                'community_id' => 2,
+                'bank_code' => '123456',
+            ],
+            [
+                'bank_name' => 'Bank Permata',
+                'account_number' => '123456789',
+                'account_name' => 'John Doe',
+                // Assign a random community_id between 1 and 3
+                'community_id' => 3,
                 'bank_code' => '123456',
             ],
         ];

@@ -11,7 +11,11 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::orderBy('created_at', 'desc')->get();
-        return view('admin.orders.index', compact('orders'));
+        $viewData = [
+            'title' => 'Order Management',
+            'orders' => $orders
+        ];
+        return view('admin.orders.index', $viewData);
     }
 
     public function create()

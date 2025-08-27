@@ -10,10 +10,13 @@
 
     <div class="flex justify-between items-center mb-4">
         <div class="flex items-center gap-2">
-            <input type="text" id="order-search" placeholder="Search orders..." class="rounded-md border px-3 py-2 text-sm bg-dark-light text-primary-lighter focus:outline-none focus:ring-2 focus:ring-primary/50" />
-            <button type="button" id="search-btn" class="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90">Search</button>
+            <input type="text" id="order-search" placeholder="Search orders..."
+                class="rounded-md border px-3 py-2 text-sm bg-dark-light text-primary-lighter focus:outline-none focus:ring-2 focus:ring-primary/50" />
+            <button type="button" id="search-btn"
+                class="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90">Search</button>
         </div>
-        <button type="button" id="export-excel" class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">
+        <button type="button" id="export-excel"
+            class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">
             <i class="fas fa-file-excel mr-2"></i> Download Excel
         </button>
     </div>
@@ -28,6 +31,7 @@
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Email</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Address</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Product ID</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Community</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Quantity</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Total Price</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Status</th>
@@ -37,13 +41,15 @@
                 <tbody class="[&_tr:last-child]:border-0">
                     @foreach ($orders as $order)
                         <tr class="border-primary/10 hover:bg-primary/10">
+                            <td class="p-4 align-middle">{{ $loop->iteration }}</td>
                             <td class="p-4 align-middle">{{ $order->id }}</td>
                             <td class="p-4 align-middle">{{ $order->customer_name }}</td>
                             <td class="p-4 align-middle">{{ $order->customer_email }}</td>
                             <td class="p-4 align-middle">{{ $order->customer_address }}</td>
                             <td class="p-4 align-middle">{{ $order->product->name }}</td>
+                            <td class="p-4 align-middle">{{ $order->product->community->name }}</td>
                             <td class="p-4 align-middle">{{ $order->quantity }}</td>
-                            <td class="p-4 align-middle">IDR. {{ number_format($order->total_price, 0) }}</td>
+                            <td class="p-4 align-middle">IDR. {{ number_format($order->total_price, 2) }}</td>
                             <td class="p-4 align-middle">{{ $order->status }}</td>
                             <td class="p-4 align-middle text-right">
                                 <a href="{{ route('admin.orders.edit', $order->id) }}"
@@ -51,7 +57,8 @@
                                     <i class="fas fa-edit h-4 w-4"></i>
                                     <span class="sr-only">Edit</span>
                                 </a>
-                                <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST"
+                                    class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button
@@ -76,7 +83,7 @@
         <!-- SheetJS for Excel export -->
         <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 var table = $('#orders-table').DataTable({
                     "paging": true,
                     "searching": true,
@@ -95,7 +102,9 @@
 
                 // Export to Excel
                 $('#export-excel').on('click', function() {
-                    var wb = XLSX.utils.table_to_book(document.getElementById('orders-table'), {sheet:"Orders"});
+                    var wb = XLSX.utils.table_to_book(document.getElementById('orders-table'), {
+                        sheet: "Orders"
+                    });
                     XLSX.writeFile(wb, 'orders.xlsx');
                 });
             });
