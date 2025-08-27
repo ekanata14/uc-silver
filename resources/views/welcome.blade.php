@@ -16,83 +16,82 @@
             <i class="fas fa-crown text-primary/25 text-5xl"></i>
         </div>
 
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Content -->
-                <div class="text-center lg:text-left">
-                    <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6" data-aos="fade-up">
-                        <span class="gradient-text">Celuk Silver Creative</span>
-                    </h1>
-                    <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl" data-aos="fade-up" data-aos-delay="200">
-                        Where Elegance Meets Community. Discover exquisite jewelry crafted with passion and connect with
-                        fellow jewelry enthusiasts.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" data-aos="fade-up"
-                        data-aos-delay="400">
-                        <button
-                            class="bg-primary hover:bg-primary-dark px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shine">
-                            Explore Collections
-                        </button>
-                        <button
-                            class="border-2 border-primary hover:bg-primary hover:text-dark px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105">
-                            Join Community
-                        </button>
+        <div class="container mx-auto px-6 relative z-10 min-h-screen flex items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+            <!-- Left Content -->
+            <div class="flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6" data-aos="fade-up">
+                <span class="gradient-text">Celuk Silver Creative</span>
+                </h1>
+                <p class="text-lg md:text-xl lg:text-2xl mb-8 text-gray-300 max-w-xl" data-aos="fade-up" data-aos-delay="200">
+                Where Elegance Meets Community. Discover exquisite jewelry crafted with passion and connect with
+                fellow jewelry enthusiasts.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full" data-aos="fade-up"
+                data-aos-delay="400">
+                <button
+                    class="bg-primary hover:bg-primary-dark px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold transition-all transform hover:scale-105 shine w-full sm:w-auto">
+                    Explore Collections
+                </button>
+                <button
+                    class="border-2 border-primary hover:bg-primary hover:text-dark px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold transition-all transform hover:scale-105 w-full sm:w-auto">
+                    Join Community
+                </button>
+                </div>
+            </div>
+
+            <!-- Right Content - Jewelry Image -->
+            <div class="relative flex justify-center items-center" data-aos="fade-left" data-aos-delay="300">
+                <div class="relative w-full max-w-md md:max-w-lg lg:max-w-xl">
+                <!-- Main jewelry showcase -->
+                <div class="relative w-full h-64 md:h-96 lg:h-[500px] rounded-3xl overflow-hidden jewelry-glow">
+                    <img src="https://images.unsplash.com/photo-1617191880362-aac615de3c26?q=80&w=4050&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="UC Silver Jewelry Collection" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent"></div>
+
+                    <!-- Floating product cards -->
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-2xl p-4 transform rotate-3 floating"
+                    style="animation-delay: 1s;">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <span class="text-sm font-semibold text-gray-800">Premium Quality</span>
+                    </div>
+                    </div>
+
+                    <div class="absolute bottom-6 left-6 bg-primary/90 backdrop-blur-sm rounded-2xl p-4 transform -rotate-2 floating"
+                    style="animation-delay: 2s;">
+                    <div class="text-white">
+                        <div class="text-xl md:text-2xl font-bold">500+</div>
+                        <div class="text-xs md:text-sm">Unique Pieces</div>
+                    </div>
+                    </div>
+
+                    <div class="absolute top-1/2 -right-4 bg-dark/90 backdrop-blur-sm rounded-2xl p-4 transform rotate-6 floating"
+                    style="animation-delay: 0.5s;">
+                    <div class="text-center">
+                        <i class="fas fa-gem text-primary text-lg md:text-2xl mb-1"></i>
+                        <div class="text-white text-xs">Handcrafted</div>
+                    </div>
                     </div>
                 </div>
 
-                <!-- Right Content - Jewelry Image -->
-                <div class="relative" data-aos="fade-left" data-aos-delay="300">
-                    <div class="relative">
-                        <!-- Main jewelry showcase -->
-                        <div class="relative w-full h-96 lg:h-[500px] rounded-3xl overflow-hidden jewelry-glow">
-                            <img src="https://images.unsplash.com/photo-1617191880362-aac615de3c26?q=80&w=4050&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="UC Silver Jewelry Collection" class="w-full h-full object-cover" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent">
-                            </div>
-
-                            <!-- Floating product cards -->
-                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-2xl p-4 transform rotate-3 floating"
-                                style="animation-delay: 1s;">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-star text-yellow-400"></i>
-                                    <span class="text-sm font-semibold text-gray-800">Premium Quality</span>
-                                </div>
-                            </div>
-
-                            <div class="absolute bottom-6 left-6 bg-primary/90 backdrop-blur-sm rounded-2xl p-4 transform -rotate-2 floating"
-                                style="animation-delay: 2s;">
-                                <div class="text-white">
-                                    <div class="text-2xl font-bold">500+</div>
-                                    <div class="text-sm">Unique Pieces</div>
-                                </div>
-                            </div>
-
-                            <div class="absolute top-1/2 -right-4 bg-dark/90 backdrop-blur-sm rounded-2xl p-4 transform rotate-6 floating"
-                                style="animation-delay: 0.5s;">
-                                <div class="text-center">
-                                    <i class="fas fa-gem text-primary text-2xl mb-1"></i>
-                                    <div class="text-white text-xs">Handcrafted</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Decorative elements around the image -->
-                        <div class="absolute -top-8 -left-8 w-16 h-16 bg-primary/20 rounded-full blur-xl"></div>
-                        <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-primary-light/20 rounded-full blur-xl"></div>
-                        <div class="absolute top-1/2 -left-12 w-8 h-8 bg-primary-lighter/30 rounded-full blur-lg"></div>
-                    </div>
-
-                    <!-- Additional floating jewelry icons around the image -->
-                    <div class="absolute -top-6 left-1/4 floating" style="animation-delay: 1.5s;">
-                        <i class="fas fa-ring text-primary/40 text-3xl"></i>
-                    </div>
-                    <div class="absolute -bottom-6 right-1/4 floating" style="animation-delay: 2.5s;">
-                        <i class="fas fa-heart text-primary/30 text-2xl"></i>
-                    </div>
-                    <div class="absolute top-1/4 -right-8 floating" style="animation-delay: 0.8s;">
-                        <i class="fas fa-crown text-primary/35 text-4xl"></i>
-                    </div>
+                <!-- Decorative elements around the image -->
+                <div class="absolute -top-8 -left-8 w-12 h-12 md:w-16 md:h-16 bg-primary/20 rounded-full blur-xl"></div>
+                <div class="absolute -bottom-8 -right-8 w-16 h-16 md:w-24 md:h-24 bg-primary-light/20 rounded-full blur-xl"></div>
+                <div class="absolute top-1/2 -left-12 w-6 h-6 md:w-8 md:h-8 bg-primary-lighter/30 rounded-full blur-lg"></div>
                 </div>
+
+                <!-- Additional floating jewelry icons around the image -->
+                <div class="absolute -top-6 left-1/4 floating" style="animation-delay: 1.5s;">
+                <i class="fas fa-ring text-primary/40 text-xl md:text-3xl"></i>
+                </div>
+                <div class="absolute -bottom-6 right-1/4 floating" style="animation-delay: 2.5s;">
+                <i class="fas fa-heart text-primary/30 text-lg md:text-2xl"></i>
+                </div>
+                <div class="absolute top-1/4 -right-8 floating" style="animation-delay: 0.8s;">
+                <i class="fas fa-crown text-primary/35 text-2xl md:text-4xl"></i>
+                </div>
+            </div>
             </div>
         </div>
     </section>

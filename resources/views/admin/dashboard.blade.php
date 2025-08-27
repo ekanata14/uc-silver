@@ -41,6 +41,7 @@
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Community</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Quantity</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Total Price</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Payment Receipt</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-primary-lighter">Status</th>
                         <th class="h-12 px-4 text-right align-middle font-medium text-primary-lighter">Actions</th>
                     </tr>
@@ -57,6 +58,94 @@
                             <td class="p-4 align-middle">{{ $order->product->community->name }}</td>
                             <td class="p-4 align-middle">{{ $order->quantity }}</td>
                             <td class="p-4 align-middle">IDR. {{ number_format($order->total_price, 2) }}</td>
+                            <td class="p-4 align-middle">
+                                @if ($order->payment_receipt)
+                                    <!-- Modal toggle button -->
+                                    <button type="button"
+                                        class="text-primary-lighter underline receipt-modal-toggle transition-colors duration-200 hover:text-primary"
+                                        data-modal-id="receipt-modal-{{ $order->id }}">
+                                        View
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div id="receipt-modal-{{ $order->id }}" tabindex="-1" aria-hidden="true"
+                                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-brown-dark/70 transition-opacity duration-300 receipt-modal">
+                                        <div class="relative p-4 w-full max-w-2xl max-h-full flex justify-center items-center">
+                                            <!-- Modal content -->
+                                            <div class="relative bg-primary-light rounded-lg shadow-lg border-2 border-brown-medium scale-95 opacity-0 transition-all duration-300 receipt-modal-content">
+                                                <!-- Modal header -->
+                                                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-brown-medium bg-brown-medium">
+                                                    <h3 class="text-xl font-semibold text-primary-lighter">
+                                                        Payment Receipt
+                                                    </h3>
+                                                    <button type="button"
+                                                        class="text-primary-lighter bg-primary hover:bg-primary-dark hover:text-dark-light rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center receipt-modal-close transition-colors duration-200"
+                                                        data-modal-id="receipt-modal-{{ $order->id }}">
+                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                        </svg>
+                                                        <span class="sr-only">Close modal</span>
+                                                    </button>
+                                                </div>
+                                                <!-- Modal body -->
+                                                <div class="p-4 md:p-5 space-y-4 flex justify-center items-center bg-primary-lighter">
+                                                    <img src="{{ asset('storage/' . $order->payment_receipt) }}" alt="Payment Receipt" class="max-w-full max-h-96 rounded shadow-lg border border-brown-medium">
+                                                </div>
+                                                <!-- Modal footer -->
+                                                <div class="flex items-center p-4 md:p-5 border-t border-brown-medium rounded-b bg-brown-light">
+                                                    <button type="button"
+                                                        class="text-primary-light bg-brown-medium hover:bg-primary-light hover:text-dark focus:ring-4 focus:outline-none focus:ring-primary-lighter font-medium rounded-lg text-sm px-5 py-2.5 text-center receipt-modal-close transition-colors duration-200"
+                                                        data-modal-id="receipt-modal-{{ $order->id }}">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @push('scripts')
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            document.querySelectorAll('.receipt-modal-toggle').forEach(function(btn) {
+                                                btn.addEventListener('click', function() {
+                                                    var modalId = btn.getAttribute('data-modal-id');
+                                                    var modal = document.getElementById(modalId);
+                                                    if (modal) {
+                                                        modal.classList.remove('hidden');
+                                                        modal.classList.add('flex');
+                                                        setTimeout(function() {
+                                                            var content = modal.querySelector('.receipt-modal-content');
+                                                            if (content) {
+                                                                content.classList.remove('scale-95', 'opacity-0');
+                                                                content.classList.add('scale-100', 'opacity-100');
+                                                            }
+                                                        }, 10);
+                                                    }
+                                                });
+                                            });
+                                            document.querySelectorAll('.receipt-modal-close').forEach(function(btn) {
+                                                btn.addEventListener('click', function() {
+                                                    var modalId = btn.getAttribute('data-modal-id');
+                                                    var modal = document.getElementById(modalId);
+                                                    if (modal) {
+                                                        var content = modal.querySelector('.receipt-modal-content');
+                                                        if (content) {
+                                                            content.classList.remove('scale-100', 'opacity-100');
+                                                            content.classList.add('scale-95', 'opacity-0');
+                                                        }
+                                                        setTimeout(function() {
+                                                            modal.classList.add('hidden');
+                                                            modal.classList.remove('flex');
+                                                        }, 300);
+                                                    }
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                    @endpush
+                                @else
+                                    <span class="text-brown-light">No Receipt</span>
+                                @endif
+                            </td>
                             <td class="p-4 align-middle">{{ $order->status }}</td>
                             <td class="p-4 align-middle text-right">
                                 <a href="{{ route('admin.orders.edit', $order->id) }}"

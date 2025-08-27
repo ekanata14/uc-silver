@@ -115,7 +115,7 @@
     </style>
 </head>
 
-<body class="bg-dark text-white font-sans">
+<body class="bg-dark text-white font-sans min-h-screen">
     <!-- Navigation Bar -->
     <nav class="fixed w-full z-50 bg-dark/90 backdrop-blur-md border-b border-primary/20">
         <div class="container mx-auto px-6 py-4">
@@ -124,8 +124,11 @@
                     <i class="fas fa-gem text-primary text-2xl"></i>
                     <span class="text-2xl font-serif font-bold gradient-text">UC Silver Admin</span>
                 </div>
-
-                <div class="flex items-center space-x-4">
+                <!-- Hamburger for mobile -->
+                <button id="sidebarToggle" class="md:hidden text-2xl text-primary-lighter focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="hidden md:flex items-center space-x-4">
                     <button class="hover:text-primary transition-colors">
                         <i class="fas fa-bell"></i>
                     </button>
@@ -142,7 +145,7 @@
 
     <div class="flex pt-20">
         <!-- Sidebar -->
-        <aside class="w-64 bg-dark-light border-r border-primary/20 p-6 h-screen fixed top-20 left-0 overflow-y-auto">
+        <aside id="adminSidebar" class="w-64 bg-dark-light border-r border-primary/20 p-6 h-[calc(100vh-5rem)] fixed top-20 left-0 overflow-y-auto z-40 transition-transform duration-300 md:translate-x-0 -translate-x-full md:static md:block">
             <nav class="space-y-4">
                 <div>
                     <h3 class="text-lg font-semibold text-primary-lighter mb-2">Dashboard</h3>
@@ -167,7 +170,6 @@
                         </li> --}}
                     </ul>
                 </div>
-
                 <div>
                     <h3 class="text-lg font-semibold text-primary-lighter mb-2">Management</h3>
                     <ul class="space-y-1">
@@ -197,7 +199,6 @@
                         </li>
                     </ul>
                 </div>
-
                 <div>
                     <h3 class="text-lg font-semibold text-primary-lighter mb-2">Settings</h3>
                     <ul class="space-y-1">
@@ -214,13 +215,42 @@
                 </div>
             </nav>
         </aside>
+        <!-- Overlay for mobile sidebar -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-40 z-30 hidden md:hidden"></div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(function () {
+                const $sidebar = $('#adminSidebar');
+                const $toggle = $('#sidebarToggle');
+                const $overlay = $('#sidebarOverlay');
 
+                function openSidebar() {
+                    $sidebar.removeClass('-translate-x-full');
+                    $overlay.show();
+                }
+                function closeSidebar() {
+                    $sidebar.addClass('-translate-x-full');
+                    $overlay.hide();
+                }
+
+                $toggle.on('click', openSidebar);
+                $overlay.on('click', closeSidebar);
+
+                $(window).on('resize', function () {
+                    if (window.innerWidth >= 768) {
+                        $sidebar.removeClass('-translate-x-full');
+                        $overlay.hide();
+                    } else {
+                        $sidebar.addClass('-translate-x-full');
+                    }
+                });
+            });
+        </script>
         <!-- Main Content Area -->
-        <main class="flex-1 ml-64 p-6">
+        <main class="flex-1 p-6 transition-all duration-300">
             @yield('content')
         </main>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @stack('scripts')
     @if(session('success'))
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -233,7 +263,6 @@
             });
         </script>
     @endif
-
     @if(session('error'))
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
@@ -245,5 +274,5 @@
             });
         </script>
     @endif
-</body> 
+</body>
 </html>
