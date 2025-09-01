@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard - UC Silver</title>
+    <title>Admin Dashboard - Celuk Silver Creative</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <script>
@@ -122,7 +122,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-gem text-primary text-2xl"></i>
-                    <span class="text-2xl font-serif font-bold gradient-text">UC Silver Admin</span>
+                    <span class="text-2xl font-serif font-bold gradient-text">Celuk Silver Creative Admin</span>
                 </div>
                 <!-- Hamburger for mobile -->
                 <button id="sidebarToggle" class="md:hidden text-2xl text-primary-lighter focus:outline-none">

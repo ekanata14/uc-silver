@@ -92,7 +92,7 @@
             <div><strong>Status:</strong> {{ $status }}</div>
         </div>
         <div class="footer">
-            &copy; {{ date('Y') }} UC Silver. All rights reserved.
+            &copy; {{ date('Y') }} Celuk Silver Creative. All rights reserved.
         </div>
     </div>
 </body>

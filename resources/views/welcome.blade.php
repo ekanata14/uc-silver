@@ -46,7 +46,7 @@
                 <!-- Main jewelry showcase -->
                 <div class="relative w-full h-64 md:h-96 lg:h-[500px] rounded-3xl overflow-hidden jewelry-glow">
                     <img src="https://images.unsplash.com/photo-1617191880362-aac615de3c26?q=80&w=4050&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="UC Silver Jewelry Collection" class="w-full h-full object-cover" />
+                    alt="Celuk Silver Creative" class="w-full h-full object-cover" />
                     <div class="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent"></div>
 
                     <!-- Floating product cards -->
@@ -393,10 +393,10 @@
         <div class="container mx-auto px-6">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-5xl font-serif font-bold text-white mb-8" data-aos="fade-up">
-                    About UC Silver
+                    About Celuk Silver Creative
                 </h2>
                 <p class="text-xl text-gray-200 mb-12 leading-relaxed" data-aos="fade-up" data-aos-delay="200">
-                    Founded with a passion for exquisite craftsmanship, UC Silver has been creating timeless jewelry pieces
+                    Founded with a passion for exquisite craftsmanship, Celuk Silver Creative has been creating timeless jewelry pieces
                     that celebrate life's most precious moments. Our community brings together jewelry enthusiasts,
                     collectors, and artisans from around the world.
                 </p>

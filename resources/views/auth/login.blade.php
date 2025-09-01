@@ -3,7 +3,7 @@
     <div class="bg-dark-light rounded-lg p-8 shadow-lg max-w-md w-full border border-primary/20 jewelry-glow">
         <div class="text-center mb-8">
             <i class="fas fa-gem text-primary text-4xl mb-4"></i>
-            <h1 class="text-4xl font-serif font-bold gradient-text">Login to UC Silver</h1>
+            <h1 class="text-4xl font-serif font-bold gradient-text">Login to Celuk Silver Creative</h1>
             <p class="text-gray-400 mt-2">Access your admin dashboard or community account</p>
         </div>
         <form method="POST" action="{{ route('auth.login.post') }}" class="space-y-6">
